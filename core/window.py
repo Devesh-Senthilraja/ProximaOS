@@ -1,3 +1,20 @@
+from apps.calculator import Calculator
+from apps.calendar import Calendar
+from apps.clock import Clock
+from apps.notepad import Notepad
+from apps.paint import Paint
+from apps.image_viewer import ImageViewer
+from apps.video_player import VideoPlayer
+from apps.audio_player import AudioPlayer
+from apps.camera import Camera
+from apps.terminal import Terminal
+from apps.weather import Weather
+from apps.translate import Translate
+from apps.dictionary import Dictionary
+from apps.news import News
+from apps.browser import Browser
+from apps.map import Map
+
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QLabel, QPushButton, QLineEdit
 from PyQt5.QtCore import Qt, QTimer, QDateTime, QPoint
 from PyQt5.QtGui import QColor, QPalette, QIcon
@@ -58,7 +75,7 @@ class MainWindow(QMainWindow):
                 icon = QIcon(icon_)
                 search_button.setIcon(icon)
                 search_button.setFixedSize(50, 50)
-                search_button.setIconSize(search_button.size())
+                search_button.seticonsize(search_button.size())
                 search_button.setStyleSheet("background-color: black; border: none;")
                 search_button.clicked.connect(self.searchAndRunApp)
                 inner_layout = QGridLayout()
@@ -89,7 +106,7 @@ class MainWindow(QMainWindow):
                     icon = QIcon(icon_)
                     shutdown_button.setIcon(icon)
                     shutdown_button.setFixedSize(50, 50)
-                    shutdown_button.setIconSize(shutdown_button.size())
+                    shutdown_button.seticonsize(shutdown_button.size())
                     shutdown_button.setStyleSheet("background-color: black; border: none;")
                     shutdown_button.clicked.connect(self.close)
                     inner_layout = QGridLayout()
@@ -110,7 +127,88 @@ class MainWindow(QMainWindow):
                 break
 
     def initButtonElements(self):
-        self.buttonElements = {}  # App button elements will be added later by dependency injection
+        self.buttonElements = {
+            "calculator": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/calculator.png"),
+                "name": "calculator",
+                "action": lambda: self.runApp(470, 740, "Calculator", Calculator)
+            },
+            "calendar": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/calendar.png"),
+                "name": "calendar",
+                "action": lambda: self.runApp(1130, 780, "Calendar", Calendar)
+            },
+            "clock": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/clock.png"),
+                "name": "clock",
+                "action": lambda: self.runApp(650, 700, "Clock", Clock)
+            },
+            "notepad": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/notepad.png"),
+                "name": "notepad",
+                "action": lambda: self.runApp(735, 990, "Notepad", Notepad)
+            },
+            "paint": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/paint.png"),
+                "name": "paint",
+                "action": lambda: self.runApp(735, 990, "Paint", Paint)
+            },
+            "photos": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/photoViewer.png"),
+                "name": "photos",
+                "action": lambda: self.runApp(1130, 780, "Image Viewer", ImageViewer)
+            },
+            "music": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/musicPlayer.png"),
+                "name": "audio",
+                "action": lambda: self.runApp(650, 700, "Audio Player", AudioPlayer)
+            },
+            "videos": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/videoPlayer.png"),
+                "name": "videos",
+                "action": lambda: self.runApp(1130, 780, "Video Player", VideoPlayer)
+            },
+            "camera": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/camera.png"),
+                "name": "camera",
+                "action": lambda: self.runApp(1130, 780, "Camera", Camera)
+            },
+            "terminal": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/terminal.png"),
+                "name": "terminal",
+                "action": lambda: self.runApp(1130, 780, "Terminal", Terminal)
+            },
+            "weather": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/weather.png"),
+                "name": "weather",
+                "action": lambda: self.runApp(1130, 780, "Weather", Weather)
+            },
+            "news": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/news.png"),
+                "name": "news",
+                "action": lambda: self.runApp(1130, 780, "News", News)
+            },
+            "map": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/map.png"),
+                "name": "map",
+                "action": lambda: self.runApp(1130, 780, "Map", Map)
+            },
+            "translate": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/translate.png"),
+                "name": "translator",
+                "action": lambda: self.runApp(1130, 780, "Translate", Translate)
+            },
+            "dictionary": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/dictionary.png"),
+                "name": "dictionary",
+                "action": lambda: self.runApp(1130, 780, "Dictionary", Dictionary)
+            },
+            "chat": {
+                "icon": os.path.join(os.path.dirname(__file__), "icons/chat.png"),
+                "name": "browser",
+                "action": lambda: self.runApp(1130, 780, "Browser", Browser)
+            }
+        }  # App button elements will be added later by dependency injection
 
     def addButtons(self, layout):
         row = 0
@@ -123,7 +221,7 @@ class MainWindow(QMainWindow):
             icon = QIcon(value["icon"])
             button.setIcon(icon)
             button.setFixedSize(75, 75)
-            button.setIconSize(button.size())
+            button.seticonsize(button.size())
             button.setStyleSheet("background-color: lightgrey; border: none;")
             button.clicked.connect(value["action"])
             layout.addWidget(button, row, col)
